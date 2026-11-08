@@ -20,7 +20,7 @@ final class InscriptionService
     {
         $existantes = $this->inscriptions->pourFormation($formationId);
         foreach ($existantes as $e) {
-            if ($debut < $e['fin'] && $fin > $e['debut']) {
+            if ($debut >= $e['debut'] && $debut < $e['fin']) {
                 return false;
             }
         }
@@ -45,7 +45,7 @@ final class InscriptionService
 
     public function calculerPenalite(string $prevue, string $retour): int
     {
-        $jours = max(0, (int) (new \DateTimeImmutable($prevue))->diff(new \DateTimeImmutable($retour))->format('%r%a'));
+        $jours = (new \DateTimeImmutable($prevue))->diff(new \DateTimeImmutable($retour))->days;
         return $jours * self::PENALITE_PAR_JOUR;
     }
 

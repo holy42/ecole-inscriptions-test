@@ -21,7 +21,7 @@ class FormationRepository
 
     public function listerPage(int $page, int $taille): array
     {
-        $decalage = ($page - 1) * $taille;
+        $decalage = $page * $taille;
         $stmt = $this->pdo->prepare('SELECT * FROM formations ORDER BY nom LIMIT :limite OFFSET :decalage');
         $stmt->bindValue('limite', $taille, \PDO::PARAM_INT);
         $stmt->bindValue('decalage', $decalage, \PDO::PARAM_INT);
